@@ -1,0 +1,149 @@
+<!DOCTYPE html>
+<html lang="pt-BR" class="h-full bg-slate-950 text-slate-100 antialiased selection:bg-rose-500 selection:text-white">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Verificação de Acesso | Conteúdo Restrito</title>
+  <meta name="description" content="Confirme sua idade para liberar o acesso ao conteúdo exclusivo.">
+  
+  <!-- Favicon -->
+  <link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>🔒</text></svg>">
+  
+  <!-- Tailwind CSS CDN -->
+  <script src="https://cdn.tailwindcss.com"></script>
+  
+  <!-- Google Fonts: Plus Jakarta Sans & Inter -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+
+  <!-- JS Confetti CDN for victory celebration -->
+  <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.9.2/dist/confetti.browser.min.js"></script>
+
+  <!-- Custom Stylesheet -->
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body class="h-full flex items-center justify-center p-4 sm:p-6 overflow-hidden relative font-sans">
+
+  <!-- Background Ambient Glow & Visual Elements -->
+  <div class="fixed inset-0 pointer-events-none overflow-hidden z-0">
+    <!-- Ambient Radial Glow Red/Rose -->
+    <div class="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[500px] h-[500px] bg-rose-600/15 rounded-full blur-[140px] transition-all duration-1000" id="ambient-glow"></div>
+    <div class="absolute top-1/4 left-1/2 -translate-x-1/2 w-[300px] h-[300px] bg-red-500/10 rounded-full blur-[100px]"></div>
+    
+    <!-- Subtle Grid Background Pattern -->
+    <div class="absolute inset-0 bg-[radial-gradient(#ffffff08_1px,transparent_1px)] [background-size:24px_24px] opacity-60"></div>
+  </div>
+
+  <!-- Main Container -->
+  <main class="relative z-10 w-full max-w-md">
+
+    <!-- Card Wrapper -->
+    <div id="verification-card" class="relative overflow-hidden rounded-3xl bg-zinc-900/90 border border-zinc-800/80 shadow-2xl backdrop-blur-xl transition-all duration-500 hover:border-zinc-700/60">
+      
+      <!-- Top Progress Bar Bar Container -->
+      <div class="w-full h-1.5 bg-zinc-800/80 relative overflow-hidden">
+        <div id="progress-bar" class="h-full w-1/2 bg-gradient-to-r from-red-600 via-rose-500 to-red-500 transition-all duration-700 ease-out shadow-[0_0_12px_rgba(244,63,94,0.8)]"></div>
+      </div>
+
+      <!-- Card Inner Padding -->
+      <div class="p-6 sm:p-8 md:p-9 text-center">
+
+        <!-- STEP 1: Age Verification -->
+        <div id="step-1" class="step-container space-y-6 transition-all duration-500 opacity-100 transform translate-y-0">
+          
+          <!-- Animated Lock Icon Header -->
+          <div class="flex justify-center">
+            <div class="relative group">
+              <!-- Outer Pulse Glow -->
+              <div class="absolute -inset-1 rounded-full bg-rose-500/20 blur-md group-hover:bg-rose-500/30 transition-all duration-500 animate-pulse"></div>
+              
+              <!-- Circular Icon Container -->
+              <div class="relative w-20 h-20 sm:w-22 sm:h-22 rounded-full bg-rose-950/40 border border-rose-500/30 flex items-center justify-center text-rose-500 shadow-inner">
+                <svg class="w-9 h-9 sm:w-10 sm:h-10 transition-transform duration-300 group-hover:scale-110" fill="none" stroke="currentColor" viewBox="0 0 24 24" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                  <rect x="3" y="11" width="18" height="11" rx="2" ry="2"></rect>
+                  <path d="M7 11V7a5 5 0 0 1 10 0v4"></path>
+                </svg>
+              </div>
+            </div>
+          </div>
+
+          <!-- Headline & Description -->
+          <div class="space-y-2">
+            <h1 class="text-2xl sm:text-3xl font-extrabold tracking-tight text-white drop-shadow-sm">
+              Você é maior de 18 anos?
+            </h1>
+            <p class="text-zinc-400 text-sm sm:text-base leading-relaxed max-w-xs mx-auto">
+              Confirme sua idade para liberar o acesso ao conteúdo restrito.
+            </p>
+          </div>
+
+          <!-- Action Button -->
+          <div class="pt-2">
+            <button id="btn-verify" type="button" class="btn-primary w-full py-4 px-6 rounded-2xl bg-gradient-to-r from-red-600 via-rose-600 to-red-600 text-white font-bold text-base sm:text-lg tracking-wide uppercase shadow-lg shadow-rose-900/40 hover:shadow-rose-600/50 hover:scale-[1.02] active:scale-[0.98] transition-all duration-200 cursor-pointer flex items-center justify-center gap-2 group">
+              <span>SIM, SOU MAIOR DE 18 ANOS</span>
+              <svg class="w-5 h-5 transition-transform duration-200 group-hover:translate-x-1" fill="none" stroke="currentColor" viewBox="0 0 24 24" stroke-width="2.5">
+                <path stroke-linecap="round" stroke-linejoin="round" d="M13.5 4.5L21 12m0 0l-7.5 7.5M21 12H3" />
+              </svg>
+            </button>
+          </div>
+
+        </div>
+
+        <!-- STEP 2: Access Approved (Hidden by default) -->
+        <div id="step-2" class="step-container space-y-6 transition-all duration-500 opacity-0 transform translate-y-4 hidden">
+          
+          <!-- Animated Green Checkmark Icon Header -->
+          <div class="flex justify-center">
+            <div class="relative">
+              <!-- Outer Glow -->
+              <div class="absolute -inset-1 rounded-full bg-emerald-500/25 blur-lg animate-pulse"></div>
+              
+              <!-- Circular Icon Container -->
+              <div class="relative w-20 h-20 sm:w-22 sm:h-22 rounded-full bg-emerald-950/50 border border-emerald-500/40 flex items-center justify-center text-emerald-400 shadow-inner scale-check">
+                <svg class="w-10 h-10 sm:w-11 sm:h-11" fill="none" stroke="currentColor" viewBox="0 0 24 24" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+                  <polyline points="20 6 9 17 4 12"></polyline>
+                </svg>
+              </div>
+            </div>
+          </div>
+
+          <!-- Headline & Description -->
+          <div class="space-y-2">
+            <h2 class="text-2xl sm:text-3xl font-extrabold tracking-tight text-white drop-shadow-sm uppercase">
+              PERFIL APROVADO!
+            </h2>
+            <p class="text-zinc-400 text-sm sm:text-base leading-relaxed max-w-xs mx-auto">
+              Seu acesso foi liberado com sucesso. Clique no botão abaixo para revelar o conteúdo.
+            </p>
+          </div>
+
+          <!-- Action Button & Footer -->
+          <div class="space-y-4 pt-2">
+            <a id="btn-access" href="#" target="_blank" class="btn-primary w-full py-4 px-6 rounded-2xl bg-gradient-to-r from-red-600 via-rose-600 to-red-600 text-white font-bold text-base sm:text-lg tracking-wider uppercase shadow-lg shadow-rose-900/40 hover:shadow-rose-600/50 hover:scale-[1.02] active:scale-[0.98] transition-all duration-200 flex items-center justify-center gap-2 group decoration-0">
+              <span>ACESSAR CONTEÚDO AGORA</span>
+              <svg class="w-5 h-5 transition-transform duration-200 group-hover:translate-x-1.5" fill="none" stroke="currentColor" viewBox="0 0 24 24" stroke-width="2.5">
+                <path stroke-linecap="round" stroke-linejoin="round" d="M8.25 4.5l7.5 7.5-7.5 7.5" />
+              </svg>
+            </a>
+
+            <!-- Badge / Trust text -->
+            <p class="text-[11px] sm:text-xs font-semibold uppercase tracking-widest text-zinc-500 flex items-center justify-center gap-2">
+              <span class="inline-block w-1.5 h-1.5 rounded-full bg-emerald-500 animate-ping"></span>
+              <span>ACESSO IMEDIATO</span>
+              <span>•</span>
+              <span>100% SIGILOSO</span>
+            </p>
+          </div>
+
+        </div>
+
+      </div>
+    </div>
+
+  </main>
+
+  <!-- Custom Script -->
+  <script src="script.js"></script>
+</body>
+</html>
